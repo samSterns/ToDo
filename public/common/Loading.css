@@ -1,3 +1,5 @@
+/* #f8c7cc #ba5a31 #34403a #69dc9e #2b3a67 */
+
 .loading-container {
     position: absolute;
     display: flex;
@@ -6,11 +8,12 @@
     top: 35vh;
     width: 100vw;
     opacity: 0.7;
+    list-style: none;
 }
 
 .loading-container img {
     width: 200px;
-    border: 1px solid #aaa;
+    border: 1px solid #69dc9e;
     border-radius: 10px;
-    box-shadow: 1px 1px 3px black;
+    box-shadow: 1px 1px 3px #2b3a67;
 }
