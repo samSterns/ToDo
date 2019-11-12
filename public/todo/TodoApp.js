@@ -14,8 +14,7 @@ class TodoApp extends Component {
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
         
-        const main = dom.querySelector('main');
-        console.log(main);
+        const main = dom.querySelector('.main');
         const list = new TodoList({ todos: [] });
         main.appendChild(list.renderDOM());
 
@@ -34,9 +33,9 @@ class TodoApp extends Component {
 
     renderHTML() {
         return /*html*/`
-            <div>
-                <main class="main"></main>
-            </div>
+        <div>
+        <main class="main"></main>
+        </div>
         `;
     }
 }

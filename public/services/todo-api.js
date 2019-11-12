@@ -45,4 +45,3 @@ export function removeTodo(id) {
         method: 'DELETE'
     });
 }
-

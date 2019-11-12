@@ -5,7 +5,6 @@ class TodoList extends Component {
     
     onRender(list) {
         const todos = this.props.todos;
-        console.log(todos, 'hi dirt');
         todos.forEach(todo => {
             const props = { todo: todo };
             const todoItem = new TodoItem(props);
