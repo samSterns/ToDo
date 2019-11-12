@@ -12,8 +12,8 @@ async function fetchWithError(url, options) {
     }
 }
 
-export function getTodos(id) {  
-    const url = `${URL}/todos/${id}`;
+export function getTodos() {  
+    const url = `${URL}/todos/`;
     return fetchWithError(url);
 }
 
@@ -39,7 +39,10 @@ export function updateTodo(todo) {
     });
 }
 
-export function removeTodo(todoId) {  
-    
+export function removeTodo(id) {  
+    const url = `${URL}/types/${id}`;
+    return fetchWithError(url, {
+        method: 'DELETE'
+    });
 }
 
