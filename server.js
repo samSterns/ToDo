@@ -41,7 +41,7 @@ app.get('/api/todos', async(req, res) => {
 
 app.post('/api/todos', async(req, res) => {
     const todos = req.body;
-
+console.log(todos);
     try {
         const result = await client.query(`
         INSERT INTO todos (task, complete)
@@ -50,6 +50,7 @@ app.post('/api/todos', async(req, res) => {
         `,
         [todos.taks, todos.complete]);
 
+        console.log(result);
         res.json(result.rows[0]);
     }
     catch (err) {

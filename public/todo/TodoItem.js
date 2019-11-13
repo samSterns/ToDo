@@ -14,6 +14,7 @@ class TodoItem extends Component {
         const todo = this.props.todo;
 
         return /*html*/`
+        <ul class="todos">${JSON.stringify(this.props.todo)}</ul>
             
         `;
     }

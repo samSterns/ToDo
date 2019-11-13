@@ -5,11 +5,20 @@ class AddTodo extends Component {
     onRender(form) {
         const onAdd = this.props.onAdd;
         
+        const newTask = form.querySelector('input');
+
         form.addEventListener('submit', async event => {
             event.preventDefault();
 
+            const newTodo = newTask.value;
+
+            const todos = {
+                task: newTodo,
+                complete: false,
+            };
+console.log(todos);
             try {
-                await onAdd(catType);
+                await onAdd(todos);
                 // this only runs if no error:
                 form.reset();
                 document.activeElement.blur();
@@ -22,8 +31,11 @@ class AddTodo extends Component {
     }
 
     renderHTML() {
+
         return /*html*/`
-            <form>
+            <form class="add-todo-form">
+                <input>
+                <button>Add ToDO</button>
                 
             </form>
         `;
