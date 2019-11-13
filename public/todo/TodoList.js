@@ -19,7 +19,7 @@ class TodoList extends Component {
     }
     renderHTML() {
         return /*html*/`
-            <li></li>
+            <ul class="todos"></ul>
         `;
     }
 }
