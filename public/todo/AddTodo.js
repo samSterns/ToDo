@@ -4,7 +4,7 @@ class AddTodo extends Component {
 
     onRender(form) {
         const onAdd = this.props.onAdd;
-        
+  console.log(onAdd);      
         const newTask = form.querySelector('input');
 
         form.addEventListener('submit', async event => {
@@ -12,13 +12,14 @@ class AddTodo extends Component {
 
             const newTodo = newTask.value;
 
-            const todos = {
+            const todo = {
                 task: newTodo,
                 complete: false,
             };
-console.log(todos);
+
             try {
-                await onAdd(todos);
+                console.log(todo);
+                await onAdd(todo);
                 // this only runs if no error:
                 form.reset();
                 document.activeElement.blur();
@@ -36,7 +37,7 @@ console.log(todos);
             <form class="add-todo-form">
                 <input>
                 <button>Add ToDO</button>
-                
+        
             </form>
         `;
     }

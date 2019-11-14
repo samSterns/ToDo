@@ -11,41 +11,67 @@ class TodoApp extends Component {
         const header = new Header({ title: 'My Todos' });
         dom.prepend(header.renderDOM());
 
+        const main = dom.querySelector('.main');
+
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
         
-        dom.appendChild(newTodo.renderDOM());
-        
-        const main = dom.querySelector('.main');
         const list = new TodoList({ todos: [] });
         main.appendChild(list.renderDOM());
         
+        console.log('trying');
         const newTodo = new AddTodo({ 
-            onAdd: async todos => {
+            onAdd: async todo => {
                 loading.update({ loading: true });
-                error.textContent = '';
+
+                try {
+
+                    const saved = await addTodo(todo);
+                    console.log(saved);
+                
+                    const todos = this.state.todos;
+                    
+                    todos.push(saved);
+                    list.update({ todos: todos });
+                    loading.update({ loading: false });
+                }
+                catch (err) {
+                    console.log('loading of todo list failed', err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
             }
         });
-
+        dom.appendChild(newTodo.renderDOM());
         try {
+            // get the types when this component first loads:
             const todos = await getTodos();
-            list.update({ todos: todos });
+            // store on "this.state" so we can get 
+            // them back for add, remove, and update:
+            this.state.todos = todos;
+    
+            // pass the loaded todos to the component:
+            list.update({ todos });
         }
         catch (err) {
-            console.log('loading of todo list failed', err);
+            // display error
+            console.log(err);
         }
         finally {
             loading.update({ loading: false });
         }
     }
-
+    
     renderHTML() {
         return /*html*/`
         <div>
+        <p class="error"></p>
         <main class="main"></main>
         </div>
         `;
     }
+    
 }
 
 export default TodoApp;

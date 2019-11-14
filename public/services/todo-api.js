@@ -13,11 +13,14 @@ async function fetchWithError(url, options) {
 }
 
 export function getTodos() {  
+ 
+    
     const url = `${URL}/todos/`;
     return fetchWithError(url);
 }
 
-export function addTodo(todo) {  
+export function addTodo(todo) { 
+    console.log(todo); 
     const url = `${URL}/todos`;
     return fetchWithError(url, {
         method: 'POST',
