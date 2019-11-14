@@ -57,10 +57,14 @@ app.put('/api/todos/:id', async(req, res) => {
     const todo = req.body;
 
     try {
-        const result = await client.query(`
-            
-        `, [/* pass in data */]);
-     
+        const result = await client.query(`     
+        UPDATE todos
+        SET    task = $2,
+               inactive = $3
+        WHERE  id = $1
+        RETURNING *;
+    `, [id, todo.task, todo.inactive]);
+
         res.json(result.rows[0]);
     }
     catch (err) {
@@ -77,7 +81,10 @@ app.delete('/api/todos/:id', async(req, res) => {
     try {
         const result = await client.query(`
          
-        `, [/* pass data */]);
+            DELETE FROM types
+            WHERE  id = $1
+            RETURNING *;
+        `, [id]);
         
         res.json(result.rows[0]);
     }

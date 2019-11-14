@@ -9,9 +9,9 @@ class TodoItem extends Component {
         const onRemove = this.props.onRemove;
         console.log(this.props)
         const inactiveButton = dom.querySelector('.inactive-button');
-        inactiveButton.addEventListener('click', () => {
+        inactiveButton.addEventListener('click', async () => {
             todo.inactive = !todo.inactive;
-            onUpdate(todo);
+            await onUpdate(todo);
         });
         
         const removeButton = dom.querySelector('.remove-button');
