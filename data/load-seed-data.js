@@ -1,5 +1,4 @@
 const client = require('../lib/client');
-// import our seed data:
 const todos = require('./todos');
 
 run();

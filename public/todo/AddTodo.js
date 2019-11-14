@@ -3,8 +3,7 @@ import Component from '../Component.js';
 class AddTodo extends Component {
 
     onRender(form) {
-        const onAdd = this.props.onAdd;
-  console.log(onAdd);      
+        const onAdd = this.props.onAdd;     
         const newTask = form.querySelector('input');
 
         form.addEventListener('submit', async event => {
@@ -18,9 +17,7 @@ class AddTodo extends Component {
             };
 
             try {
-                console.log(todo);
                 await onAdd(todo);
-                // this only runs if no error:
                 form.reset();
                 document.activeElement.blur();
             }

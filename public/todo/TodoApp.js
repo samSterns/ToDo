@@ -12,28 +12,25 @@ class TodoApp extends Component {
         dom.prepend(header.renderDOM());
 
         const main = dom.querySelector('.main');
+        const error = dom.querySelector('.error');
 
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
         
         const list = new TodoList({ todos: [] });
         main.appendChild(list.renderDOM());
-        
-        console.log('trying');
+       
         const newTodo = new AddTodo({ 
             onAdd: async todo => {
                 loading.update({ loading: true });
 
                 try {
-
                     const saved = await addTodo(todo);
-                    console.log(saved);
-                
+
                     const todos = this.state.todos;
-                    
                     todos.push(saved);
                     list.update({ todos: todos });
-                    loading.update({ loading: false });
+                    // loading.update({ loading: false });
                 }
                 catch (err) {
                     console.log('loading of todo list failed', err);
@@ -42,20 +39,75 @@ class TodoApp extends Component {
                     loading.update({ loading: false });
                 }
             }
+          
         });
         dom.appendChild(newTodo.renderDOM());
-        try {
-            // get the types when this component first loads:
-            const todos = await getTodos();
-            // store on "this.state" so we can get 
-            // them back for add, remove, and update:
-            this.state.todos = todos;
+
+        const todoList = new TodoList({ 
+            todos: [],
+            onUpdate: async todo => {
+                loading.update({ loading: true });
+                // clear prior error
+                error.textContent = '';
+
+                try {
+                    // part 1: do work on the server
+                    const updated = await updateTodo(todo);
+                    
+                    // part 2: integrate back into our list
+                    const todos = this.state.todos;
+                    // find the index of this todo:
+                    const index = todos.indexOf(todo);
+                    // replace with updated object from server:
+                    todos.splice(index, 1, updated);
+
+                    // part 3: tell component to update
+                    todoList.update({ todos });
+                }
+                catch (err) {
+                    // display error
+                    console.log(err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            },
+            onRemove: async todo => {
+                loading.update({ loading: true });
+                // clear prior error
+                error.textContent = '';
+
+                try {
+                    // part 1: do work on the server
+                    await removeTodo(todo.id);
+                    
+                    // part 2: integrate back into our list
+                    const todos = this.state.todos;        
+                    // find the index of this todo:
+                    const index = todos.indexOf(todo);
+                    // remove from the list
+                    todos.splice(index, 1);
     
-            // pass the loaded todos to the component:
+                    // part 3: tell component to update
+                    todoList.update({ todos });
+                }
+                catch (err) {
+                    // display error
+                    console.log(err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            }
+        });
+        main.appendChild(todoList.renderDOM());
+
+        try {
+            const todos = await getTodos();
+            this.state.todos = todos;
             list.update({ todos });
         }
         catch (err) {
-            // display error
             console.log(err);
         }
         finally {

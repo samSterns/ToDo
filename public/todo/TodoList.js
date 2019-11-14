@@ -5,15 +5,18 @@ class TodoList extends Component {
     
     onRender(list) {
         const todos = this.props.todos;
+        const onUpdate = this.props.onUpdate;
+        const onRemove = this.props.onRemove;
+        console.log(onUpdate);
         todos.forEach(todo => {
-            const props = { todo: todo };
-            const todoItem = new TodoItem(props);
+            // const props = { todo: todo, onUpdate: onUpdate, onRemove: onRemove };
+
+            const todoItem = new TodoItem({ todo, onUpdate, onRemove });
             const todoItemDOM = todoItem.renderDOM();
             list.appendChild(todoItemDOM);
         });
 
-        // const onUpdate = this.props.onUpdate;
-        // const onRemove = this.props.onRemove;
+
 
         
     }
