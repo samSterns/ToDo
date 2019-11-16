@@ -16,9 +16,6 @@ class TodoApp extends Component {
 
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
-        
-        // const list = new TodoList({ todos: [] });
-        // main.appendChild(list.renderDOM());
        
         const newTodo = new AddTodo({ 
             onAdd: async todo => {
@@ -26,11 +23,9 @@ class TodoApp extends Component {
 
                 try {
                     const saved = await addTodo(todo);
-
                     const todos = this.state.todos;
                     todos.push(saved);
                     todoList.update({ todos: todos });
-                    // loading.update({ loading: false });
                 }
                 catch (err) {
                     console.log('loading of todo list failed', err);
@@ -47,25 +42,19 @@ class TodoApp extends Component {
             todos: [],
             onUpdate: async todo => {
                 loading.update({ loading: true });
-                // clear prior error
+                
                 error.textContent = '';
 
                 try {
-                    // part 1: do work on the server
+                   
                     const updated = await updateTodo(todo);
-                    
-                    // part 2: integrate back into our list
                     const todos = this.state.todos;
-                    // find the index of this todo:
                     const index = todos.indexOf(todo);
-                    // replace with updated object from server:
                     todos.splice(index, 1, updated);
-
-                    // part 3: tell component to update
                     todoList.update({ todos });
                 }
                 catch (err) {
-                    // display error
+                  
                     console.log(err);
                 }
                 finally {
@@ -74,25 +63,20 @@ class TodoApp extends Component {
             },
             onRemove: async todo => {
                 loading.update({ loading: true });
-                // clear prior error
                 error.textContent = '';
 
                 try {
-                    // part 1: do work on the server
                     await removeTodo(todo.id);
-                    
-                    // part 2: integrate back into our list
                     const todos = this.state.todos;        
-                    // find the index of this todo:
+                  
                     const index = todos.indexOf(todo);
-                    // remove from the list
+                   
                     todos.splice(index, 1);
     
-                    // part 3: tell component to update
+                    
                     todoList.update({ todos });
                 }
                 catch (err) {
-                    // display error
                     console.log(err);
                 }
                 finally {

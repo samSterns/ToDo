@@ -60,10 +60,10 @@ app.put('/api/todos/:id', async(req, res) => {
         const result = await client.query(`     
         UPDATE todos
         SET    task = $2,
-               inactive = $3
+               complete = $3
         WHERE  id = $1
         RETURNING *;
-    `, [id, todo.task, todo.inactive]);
+    `, [id, todo.task, todo.complete]);
 
         res.json(result.rows[0]);
     }
@@ -81,7 +81,7 @@ app.delete('/api/todos/:id', async(req, res) => {
     try {
         const result = await client.query(`
          
-            DELETE FROM types
+            DELETE FROM todos
             WHERE  id = $1
             RETURNING *;
         `, [id]);

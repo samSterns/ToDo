@@ -31,7 +31,7 @@ export function addTodo(todo) {
 }
 
 export function updateTodo(todo) {  
-    const url = `${URL}/types/${todo.id}`;
+    const url = `${URL}/todos/${todo.id}`;
     return fetchWithError(url, {
         method: 'PUT',
         headers: {
@@ -42,7 +42,7 @@ export function updateTodo(todo) {
 }
 
 export function removeTodo(id) {  
-    const url = `${URL}/types/${id}`;
+    const url = `${URL}/todos/${id}`;
     return fetchWithError(url, {
         method: 'DELETE'
     });
